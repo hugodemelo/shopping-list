@@ -3,11 +3,11 @@ import { Product } from "../data/entities";
 
 interface Props {
     product: Product;
-    callback: (product: Product, quantity: number) => void;
+    addToOrder: (product: Product, quantity: number) => void;
 }
 
 export const ProductItem: FunctionComponent<Props> = props => {
-    const [quantity, setQuantity] = useState<number>(1);
+    const [quantity, setQuantity] = useState(1);
 
     return (
         <div className="card m-1 p-1 bg-light">
@@ -19,7 +19,7 @@ export const ProductItem: FunctionComponent<Props> = props => {
                 {props.product.description}
                 <button
                     className="btn btn-success btn-sm float-right"
-                    onClick={() => props.callback(props.product, quantity)}
+                    onClick={() => props.addToOrder(props.product, quantity)}
                 >
                     Add to Cart
                 </button>
