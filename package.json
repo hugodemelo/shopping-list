@@ -14,7 +14,7 @@
     "typescript": "3.6.3"
   },
   "scripts": {
-    "rest": "json-server data.json -p 4600",
+    "rest": "json-server src/data.json -p 4600",
     "serve": "react-scripts start",
     "start": "npm-run-all -p serve rest",
     "build": "react-scripts build",

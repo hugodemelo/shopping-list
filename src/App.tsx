@@ -1,9 +1,21 @@
 import React, { FunctionComponent } from "react";
+import { Product } from "./data/entities";
+import { ProductList } from "./components/ProductList";
+import TestData from "./data.json";
 import "./App.css";
-import 'bootstrap/dist/css/bootstrap.css';
+
+const testData = TestData.products;
 
 const App: FunctionComponent = () => {
-    return <h1>Hello React and TS!</h1>;
+    const addToOrder = (product: Product, quantity: number) => {
+        console.log(`Add ${quantity} of ${product.name}`);
+    };
+
+    return (
+        <div className="App">
+            <ProductList products={testData} addToOrder={addToOrder} />
+        </div>
+    );
 };
 
 export default App;
