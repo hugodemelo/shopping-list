@@ -5,8 +5,7 @@ import { dataStore } from "./data/dataStore";
 import { addProduct } from "./data/actionCreators";
 import { ConnectedProductList } from "./components/ProductList";
 import { ConnectedOrderSummary } from "./components/OrderSummary";
-import {Summary} from "./components/Summary";
-
+import { Summary } from "./components/Summary";
 import "./App.css";
 
 const App: FunctionComponent = () => {
@@ -27,14 +26,14 @@ const App: FunctionComponent = () => {
                         <Route path="/products" component={ConnectedProductList} />
                         <Route
                             path="/order"
-                            render={props => {
-                                const navigateTo = (id: number) => {
-                                    props.history.push(`/summary/${id}`);
-                                };
-                                return <ConnectedOrderSummary {...props} navigateTo={navigateTo} />;
-                            }}
+                            render={props => (
+                                <ConnectedOrderSummary
+                                    {...props}
+                                    navigateTo={id => props.history.push(`/summary/${id}`)}
+                                />
+                            )}
                         />
-                        <Route path="/summary/:id" component={ Summary } />
+                        <Route path="/summary/:id" component={Summary} />
                         <Redirect to="/products" />
                     </Switch>
                 </BrowserRouter>
