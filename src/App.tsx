@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
+import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import { dataStore } from "./data/dataStore";
 import { addProduct } from "./data/actionCreators";
-import { ConnectedProductList } from "./data/productListConnector";
+import { ConnectedProductList } from "./components/ProductList";
 import "./App.css";
 
 interface Props {}
 
 class App extends Component<Props> {
-    
     componentDidMount() {
         (async () => {
             const result = await fetch("http://localhost:4600/products/");
@@ -21,7 +21,12 @@ class App extends Component<Props> {
         return (
             <div className="App">
                 <Provider store={dataStore}>
-                    <ConnectedProductList />
+                    <BrowserRouter>
+                        <Switch>
+                            <Route path="/products" component={ConnectedProductList} />
+                            <Redirect to="/products" />
+                        </Switch>
+                    </BrowserRouter>
                 </Provider>
             </div>
         );

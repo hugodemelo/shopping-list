@@ -3,6 +3,9 @@ import { Header } from "./Header";
 import { CategoryList } from "./CategoryList";
 import { ProductItem } from "./ProductItem";
 import { Product, Order } from "../data/entities";
+import { StoreData } from "../data/types";
+import { modifyOrder } from "../data/actionCreators";
+import { connect } from "react-redux";
 
 interface Props {
     products: Product[];
@@ -11,7 +14,7 @@ interface Props {
     addToOrder: (product: Product, quantity: number) => void;
 }
 
-export const ProductList: FunctionComponent<Props> = props => {
+const ProductList: FunctionComponent<Props> = props => {
     const [selectedCategory, setSelectedCategory] = useState("All");
 
     const filterCategories = (): Product[] => {
@@ -40,3 +43,15 @@ export const ProductList: FunctionComponent<Props> = props => {
         </div>
     );
 };
+
+const mapStateToProps = (data: StoreData) => ({
+    products: data.products,
+    categories: [...new Set(data.products.map(p => p.category))],
+    order: data.order
+});
+
+const mapDispatchToProps = {
+    addToOrder: modifyOrder
+};
+
+export const ConnectedProductList = connect(mapStateToProps, mapDispatchToProps)(ProductList);
