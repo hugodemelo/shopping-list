@@ -4,9 +4,13 @@ import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import { dataStore } from "./data/dataStore";
 import { addProduct } from "./data/actionCreators";
 import { ConnectedProductList } from "./components/ProductList";
+import { ConnectedOrderSummary } from "./components/OrderSummary";
+import {Summary} from "./components/Summary";
+
 import "./App.css";
 
 const App: FunctionComponent = () => {
+    
     useEffect(() => {
         (async () => {
             const result = await fetch("http://localhost:4600/products/");
@@ -21,6 +25,16 @@ const App: FunctionComponent = () => {
                 <BrowserRouter>
                     <Switch>
                         <Route path="/products" component={ConnectedProductList} />
+                        <Route
+                            path="/order"
+                            render={props => {
+                                const navigateTo = (id: number) => {
+                                    props.history.push(`/summary/${id}`);
+                                };
+                                return <ConnectedOrderSummary {...props} navigateTo={navigateTo} />;
+                            }}
+                        />
+                        <Route path="/summary/:id" component={ Summary } />
                         <Redirect to="/products" />
                     </Switch>
                 </BrowserRouter>
